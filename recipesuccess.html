@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recipe  Added</title>
+</head>
+<body>
+<h1>Added {{title}} Recipe Successfully from User : {{session['username']}}</h1>
+<BR>
+   
+<p><a id= 'recipeurl' href="{{recipeurl}}">User Profile Recipes</a>
+<BR>   
+<p><a href="{{ url_for('upload_recipe') }}">Upload Recipe</a>
+</body>
+</html>

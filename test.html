@@ -1,0 +1,461 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cooking Recipes</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <style>
+        body {
+            margin: 0;
+            font-family: "SUMAC", sans-serif;
+            background-color: #000000;
+            color: #f5f5dc;
+        }
+        .navbar {
+            background-color: #000000;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar a {
+            color: #f5f5dc;
+            text-decoration: none;
+            font-size: 18px;
+            margin: 0 10px;
+        }
+        .navbar .left {
+            display: flex;
+            align-items: center;
+        }
+        .navbar .right {
+            display: flex;
+            align-items: center;
+        }
+        .navbar .right a {
+            background-color: #f5f5dc;
+            color: #000000;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+        .hero {
+            position: relative;
+            text-align: center;
+            color: #f5f5dc;
+        }
+        .hero img {
+            width: calc(100% - 200px);
+            height: auto;
+            border-left: 0.5in solid #f5f5dc;
+            border-right: 0.5in solid #f5f5dc;
+            border-top: 0.25in solid #f5f5dc;
+            border-bottom: 0.25in solid #f5f5dc;
+        }
+        .hero .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #f5f5dc;
+            color: #000000;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .hero .content h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+        .hero .content p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .recipes, .login, .register, .categories, .profile, .recipe-details {
+            padding: 20px;
+            text-align: center;
+            display: none;
+        }
+        .recipes h2, .login h2, .register h2, .categories h2, .profile h2, .recipe-details h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        .recipes .recipe-item, .login .login-form, .register .register-form, .categories .category-item, .profile .profile-info, .recipe-details .ingredients, .recipe-details .steps, .recipe-details .comments {
+            margin-bottom: 20px;
+        }
+        .recipes .recipe-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            border-left: 0.5in solid #f5f5dc;
+            border-right: 0.5in solid #f5f5dc;
+            border-top: 0.25in solid #f5f5dc;
+            border-bottom: 0.25in solid #f5f5dc;
+        }
+        .recipes .recipe-item h3 {
+            font-size: 24px;
+            margin: 10px 0;
+        }
+        .login .login-form input, .login .login-form textarea, .register .register-form input, .comments .comment-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #000000;
+            color: #f5f5dc;
+        }
+        .login .login-form button, .register .register-form button, .comments .comment-form button {
+            background-color: #f5f5dc;
+            color: #000000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .login .login-form textarea, .comments .comment-form textarea {
+            min-height: 60px;
+            background-color: #000000;
+            color: #f5f5dc;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+            padding: 10px;
+        }
+        .recipes-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .recipes-table th, .recipes-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        .recipes-table th {
+            background-color: #000000;
+            color: #f5f5dc;
+            text-align: left;
+        }
+        .recipes-table td a {
+            color: #f5f5dc;
+            text-decoration: none;
+        }
+        .categories .category-item a {
+            color: #f5f5dc;
+            text-decoration: none;
+            font-size: 20px;
+        }
+        .profile .profile-info img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            border-left: 0.5in solid #f5f5dc;
+            border-right: 0.5in solid #f5f5dc;
+            border-top: 0.25in solid #f5f5dc;
+            border-bottom: 0.25in solid #f5f5dc;
+        }
+        .profile .profile-info h3 {
+            font-size: 24px;
+            margin: 10px 0;
+        }
+        .profile .profile-info p {
+            font-size: 18px;
+            margin: 5px 0;
+        }
+        .comments .comment-item {
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        .comments .comment-item h4 {
+            font-size: 20px;
+            margin: 5px 0;
+        }
+        .comments .comment-item p {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+        .recipe-details .ingredients ul, .recipe-details .steps ol {
+            text-align: left;
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+        }
+        .recipe-details .ingredients ul li, .recipe-details .steps ol li {
+            font-size: 18px;
+            margin: 5px 0;
+        }
+        .recipe-details img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            border-left: 0.5in solid #f5f5dc;
+            border-right: 0.5in solid #f5f5dc;
+            border-top: 0.25in solid #f5f5dc;
+            border-bottom: 0.25in solid #f5f5dc;
+            margin-bottom: 20px;
+        }
+    </style>
+    <script>
+        const recipes = [
+            { name: 'Spaghetti with Tomato Sauce', description: 'A classic Italian pasta dish with a rich tomato sauce.', category: 'Dinner', image: 'https://storage.googleapis.com/a1aa/image/spaghetti.jpg' },
+            { name: 'Fresh Vegetable Salad', description: 'A healthy and refreshing salad with a variety of vegetables.', category: 'Lunch', image: 'https://storage.googleapis.com/a1aa/image/salad.jpg' },
+            { name: 'Chocolate Cake', description: 'A delicious chocolate cake with a rich and moist texture.', category: 'Desserts', image: 'https://storage.googleapis.com/a1aa/image/cake.jpg' },
+            { name: 'Pancakes', description: 'Fluffy pancakes perfect for breakfast.', category: 'Breakfast', image: 'https://storage.googleapis.com/a1aa/image/pancakes.jpg' },
+            { name: 'Omelette', description: 'A simple and delicious omelette.', category: 'Breakfast', image: 'https://storage.googleapis.com/a1aa/image/omelette.jpg' }
+        ];
+
+        function showSection(section="hero") {
+            const sections = document.querySelectorAll('.recipes, .login, .register, .categories, .profile, .recipe-details, .hero');
+            sections.forEach(sec => sec.style.display = 'none');
+            document.querySelector(`.${section}`).style.display = 'block';
+        }
+
+        function showRecipeDetails(recipe) {
+            const recipeDetails = document.querySelector('.recipe-details');
+            const recipeImage = document.querySelector('.recipe-details img');
+            const recipeTitle = document.querySelector('.recipe-details h2');
+            const recipeData = recipes.find(r => r.name === recipe);
+
+            if (recipeData) {
+                recipeImage.src = recipeData.image;
+                recipeTitle.innerText = recipeData.name;
+            }
+
+            showSection('recipe-details');
+            loadComments(recipe);
+        }
+
+        function showRecipesTable() {
+            const recipesTableBody = document.querySelector('.recipes-table tbody');
+            recipesTableBody.innerHTML = '';
+
+            recipes.forEach(recipe => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${recipe.name}</td>
+                    <td>${recipe.description}</td>
+                    <td><a href="#" onclick="showRecipeDetails('${recipe.name}')">View Recipe</a></td>
+                `;
+                recipesTableBody.appendChild(row);
+            });
+
+            showSection('recipes');
+        }
+
+        function showCategory(category) {
+            const recipesTableBody = document.querySelector('.recipes-table tbody');
+            recipesTableBody.innerHTML = '';
+
+            const filteredRecipes = recipes.filter(recipe => recipe.category === category);
+            filteredRecipes.forEach(recipe => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${recipe.name}</td>
+                    <td>${recipe.description}</td>
+                    <td><a href="#" onclick="showRecipeDetails('${recipe.name}')">View Recipe</a></td>
+                `;
+                recipesTableBody.appendChild(row);
+            });
+
+            showSection('recipes');
+        }
+
+        function registerUser(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const user = { username, email, password };
+            localStorage.setItem('user', JSON.stringify(user));
+
+            alert('User registered successfully!');
+            showSection('login');
+        }
+
+        function loginUser(event) {
+            event.preventDefault();
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+
+            const user = JSON.parse(localStorage.getItem('user'));
+
+            if (user && user.username === username && user.password === password) {
+                alert('Login successful!');
+                showSection('profile');
+                document.getElementById('profile-username').innerText = user.username;
+                document.getElementById('profile-email').innerText = user.email;
+            } else {
+                alert('Invalid username or password. Please try again.');
+            }
+        }
+
+        function submitComment(event) {
+            event.preventDefault();
+            const commentText = document.getElementById('comment-text').value;
+            const user = JSON.parse(localStorage.getItem('user'));
+            const recipe = document.querySelector('.recipe-details h2').innerText;
+
+            if (user) {
+                const comments = JSON.parse(localStorage.getItem('comments')) || {};
+                if (!comments[recipe]) {
+                    comments[recipe] = [];
+                }
+                comments[recipe].push({ username: user.username, text: commentText });
+                localStorage.setItem('comments', JSON.stringify(comments));
+
+                const commentSection = document.querySelector('.comments');
+                const newComment = document.createElement('div');
+                newComment.classList.add('comment-item');
+                newComment.innerHTML = `
+                    <h4>${user.username}</h4>
+                    <p>${commentText}</p>
+                `;
+                commentSection.insertBefore(newComment, commentSection.querySelector('.comment-form'));
+                document.getElementById('comment-text').value = '';
+            } else {
+                alert('You must be logged in to submit a comment.');
+            }
+        }
+
+        function loadComments(recipe) {
+            const comments = JSON.parse(localStorage.getItem('comments')) || {};
+            const commentSection = document.querySelector('.comments');
+            commentSection.innerHTML = `
+                <h3>Comments</h3>
+                <div class="comment-form">
+                    <textarea id="comment-text" class="flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" placeholder="Add a comment..."></textarea>
+                    <button onclick="submitComment(event)">Submit</button>
+                </div>
+            `;
+
+            if (comments[recipe]) {
+                comments[recipe].forEach(comment => {
+                    const newComment = document.createElement('div');
+                    newComment.classList.add('comment-item');
+                    newComment.innerHTML = `
+                        <h4>${comment.username}</h4>
+                        <p>${comment.text}</p>
+                    `;
+                    commentSection.insertBefore(newComment, commentSection.querySelector('.comment-form'));
+                });
+            }
+        }
+       /* function showSection()
+        {
+            var loadsect='{{loadsec}}';
+            if ( loadsect == "login")
+            {
+              showSection(loadsect);
+            }
+            else { showSection(loadsect);}
+        }*/
+      
+    </script>
+</head>
+<body> 
+ <div class="navbar">
+        <div class="left">
+            <a href="#" onclick="showSection('hero')">HOME</a>
+        </div>
+        <div class="right">
+            <a href="#" onclick="showRecipesTable()">Recipes</a>
+           <!---- <a href="#" onclick="showSection('categories')">Categories</a>-->
+            <a href="#" onclick="showSection('login')">Login</a>
+            <a href="#" onclick="showSection('profile')">Profile</a>
+            <a href="#" onclick="showSection('register')">Register</a>
+        </div>
+    </div>
+    <div class="hero">
+        <img src="https://storage.googleapis.com/a1aa/image/d4UZf2gZAcS2MSvm1CpxZY6CknXNRIBTGJDjUIEWwhL1wVzJA.jpg" alt="A variety of delicious cooked meals displayed on a table" width="1000" height="600">
+        <div class="content">
+            <h1>Hello there!</h1>
+            <p>We're here to help you cook delicious meals with less stress and more joy. We offer recipes and cooking advice for home cooks, by home cooks.</p>
+        </div>
+    </div>
+    <div class="recipes">
+        <h2>Recipes</h2>
+        <table class="recipes-table">
+            <thead>
+                <tr>
+                    <th>Recipe Name</th>
+                    <th>Description</th>
+                    <th>Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Recipes will be dynamically inserted here -->
+            </tbody>
+        </table>
+    </div>
+    <!---<div class="categories">
+        <h2>Categories</h2>
+        <div class="category-item"><a href="#" onclick="showCategory('Breakfast')">Breakfast</a></div>
+        <div class="category-item"><a href="#" onclick="showCategory('Lunch')">Lunch</a></div>
+        <div class="category-item"><a href="#" onclick="showCategory('Dinner')">Dinner</a></div>
+        <div class="category-item"><a href="#" onclick="showCategory('Snacks')">Snacks</a></div>
+        <div class="category-item"><a href="#" onclick="showCategory('Desserts')">Desserts</a></div>
+    </div>--->
+    <div class="login" id="login">
+        <h2>Login</h2>
+        <div class="login-form">
+        <form action="{{ url_for('login')}}" method="POST">
+            <input type="text" id="login-username" name="username" placeholder="Username">
+            <input type="password" id="login-password" name="password" placeholder="Password">
+            <!--<button onclick="loginUser(event)">Login</button> -->
+            <button type="submit" value="Login">Login</button>
+        </form>
+        </div>
+    </div>
+    <div class="register">
+        <h2>RegisterTest</h2>
+        <div class="register-form">
+        <form action="{{ url_for('register')}}" method="POST">
+            <input type="text" id="username" size=20 name="username">
+            <input type="email" id="email" size=20 name="email" >
+            <input type="password" id="password"  size=20  name="password" >
+            <!--<button onclick="registerUser(event)">Register</button>-->
+            <button type="submit" value="Register">Register</button>
+            <!--<input type="submit" value="Register" size="20" formaction="{{ url_for('register')}}" formmethod="post">-->
+        </form>
+        </div>
+    </div>
+    <div class="profile">
+        <h2>User Profile</h2>
+        <div class="profile-info">
+            <img src="https://storage.googleapis.com/a1aa/image/jMos8BpdgfQgJa9nqmxKL3ViQZex6MNceULfJbHChHksYuaOB.jpg" alt="User profile picture" width="150" height="150">
+            <h3 id="profile-username">UserName: {{session['username']}}</h3>
+            <p id="profile-email">Email: {{session['username']}}</p>
+            <p>Bio: Cooking enthusiast and food lover.</p>
+        </div>
+    </div>
+
+   <!----- <div class="recipe-details">
+        <h2>Spaghetti with Tomato Sauce</h2>
+        <img src="https://storage.googleapis.com/a1aa/image/spaghetti.jpg" alt="Spaghetti with Tomato Sauce">
+        <div class="ingredients">
+            <h3>Ingredients</h3>
+            <ul>
+                <li>200g spaghetti</li>
+                <li>2 cups tomato sauce</li>
+                <li>1 onion, chopped</li>
+                <li>2 cloves garlic, minced</li>
+                <li>1 tbsp olive oil</li>
+                <li>Salt and pepper to taste</li>
+                <li>Fresh basil leaves for garnish</li>
+            </ul>
+        </div>
+        <div class="steps">
+            <h3>Steps to Make</h3>
+            <ol>
+                <li>Cook the spaghetti according to the package instructions. Drain and set aside.</li>
+                <li>In a large pan, heat the olive oil over medium heat. Add the chopped onion and minced garlic, and sauté until the onion is translucent.</li>
+                translucent.</li>
+            </ol>
+        </div>--->
+        </div>  
+</body>
+</html>
